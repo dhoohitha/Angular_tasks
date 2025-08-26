@@ -1,0 +1,43 @@
+.card {
+  max-width: 560px;
+  margin: 24px auto;
+  padding: 18px;
+  border: 2px solid #222;
+  border-radius: 12px;
+  background: #fafafa;
+  font-family: system-ui, Arial, sans-serif;
+}
+h2 { margin: 0 0 12px; }
+
+label { display: block; margin: 10px 0; }
+label > span { display: inline-block; margin-bottom: 6px; font-weight: 600; }
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+}
+
+input.invalid, textarea.invalid { border-color: #e74c3c; background: #fff5f5; }
+
+.error { color: #b00020; font-size: 13px; margin: 4px 0 8px; }
+
+button[type="submit"],
+.card > button {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+button[disabled] { background: #c9c9c9; cursor: not-allowed; }
+
+small { color: #666; font-weight: 500; }

@@ -1,0 +1,75 @@
+<!-- Thank-you -->
+<div class="card" *ngIf="submitted() && form.valid; else formView">
+  <h2>Thank you!</h2>
+  <p>We’ll get back to you shortly!</p>
+  <button type="button" (click)="newResponse()">Submit another response</button>
+</div>
+
+<!-- Form -->
+<ng-template #formView>
+  <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h2>Feedback</h2>
+
+    <!-- Name -->
+    <label>
+      <span>Name</span>
+      <input
+        type="text"
+        formControlName="name"
+        autocomplete="name"
+        [class.invalid]="isInvalid('name')"
+        placeholder="Your full name" />
+    </label>
+    <div class="error" *ngIf="isInvalid('name')">
+      <span *ngIf="form.get('name')?.errors?.['required']">Name is required.</span>
+      <span *ngIf="form.get('name')?.errors?.['minlength']">At least 2 characters.</span>
+    </div>
+
+    <!-- Email -->
+    <label>
+      <span>Email</span>
+      <input
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [class.invalid]="isInvalid('email')"
+        placeholder="you@example.com" />
+    </label>
+    <div class="error" *ngIf="isInvalid('email')">
+      <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="form.get('email')?.errors?.['email']">Enter a valid email.</span>
+    </div>
+
+    <!-- Subject -->
+    <label>
+      <span>Subject <small>({{subjectLen}}/40)</small></span>
+      <input
+        type="text"
+        formControlName="subject"
+        [attr.maxLength]="40"
+        [class.invalid]="isInvalid('subject')"
+        placeholder="Short summary" />
+    </label>
+    <div class="error" *ngIf="isInvalid('subject')">
+      <span *ngIf="form.get('subject')?.errors?.['required']">Subject is required.</span>
+      <span *ngIf="form.get('subject')?.errors?.['maxlength']">Max 40 characters.</span>
+    </div>
+
+    <!-- Comments -->
+    <label>
+      <span>Comments / Issues <small>({{commentsLen}}/350)</small></span>
+      <textarea
+        formControlName="comments"
+        rows="5"
+        [attr.maxLength]="350"
+        [class.invalid]="isInvalid('comments')"
+        placeholder="Describe your feedback or issue"></textarea>
+    </label>
+    <div class="error" *ngIf="isInvalid('comments')">
+      <span *ngIf="form.get('comments')?.errors?.['required']">Comments are required.</span>
+      <span *ngIf="form.get('comments')?.errors?.['maxlength']">Max 350 characters.</span>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+</ng-template>
