@@ -1,0 +1,49 @@
+<div class="movies-container">
+
+  <div class="toolbar">
+    <div class="avg">
+      <span class="label">Average Rating:</span>
+      <span class="value">★ {{ avgRating().toFixed(1) }}</span>
+    </div>
+
+    <mat-form-field appearance="outline" class="genre-field">
+      <mat-label>Filter by genre</mat-label>
+      <mat-select
+        [value]="genreFilter()"
+        (selectionChange)="genreFilter.set($event.value)">
+        <mat-option [value]="''">All</mat-option>
+        <mat-option *ngFor="let g of genres()" [value]="g">{{ g }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+ 
+  <div class="grid">
+    <mat-card
+      class="movie-card"
+      *ngFor="let m of filtered()"
+      [class.top-rated]="isTop(m)"
+    >
+      <img mat-card-image [src]="m.poster" [alt]="m.title + ' poster'" />
+
+      <mat-card-header>
+        <mat-card-title>{{ m.title }}</mat-card-title>
+        <mat-card-subtitle>{{ m.genre }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="rating" aria-label="Rating">
+          <mat-icon *ngFor="let i of stars">
+            {{ i <= round(m.rating) ? 'star' : 'star_border' }}
+          </mat-icon>
+          <span class="num">{{ m.rating.toFixed(1) }}</span>
+        </div>
+        <p class="desc">{{ m.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="empty" *ngIf="filtered().length === 0">
+    No movies found for this genre.
+  </div>
+</div>
