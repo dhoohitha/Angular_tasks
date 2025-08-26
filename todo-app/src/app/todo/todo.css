@@ -1,0 +1,86 @@
+.todo {
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 16px;
+  border: 2px solid #222;
+  border-radius: 12px;
+  background: #fafafa;
+  font-family: system-ui, Arial, sans-serif;
+}
+h2 { margin: 0 0 12px; }
+
+form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+input[placeholder] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  font-size: 15px;
+}
+form button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px 0 10px;
+}
+.toggle-all { display: flex; gap: 8px; align-items: center; }
+
+.filters button {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 6px 10px;
+  margin-left: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.filters button.active { background: #e0f0ff; border-color: #8ac2ff; }
+
+.list { list-style: none; padding: 0; margin: 0; }
+.list li {
+  display: grid;
+  grid-template-columns: 28px 1fr 40px;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.title {
+  padding: 8px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+.title:focus { background: #fff7d6; border: 1px dashed #e0b400; }
+.title.done { text-decoration: line-through; color: #999; }
+
+.del {
+  border: none;
+  background: #ffbfbf;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.clear {
+  background: #ffd7a8;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}

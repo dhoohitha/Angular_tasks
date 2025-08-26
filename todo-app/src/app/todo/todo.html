@@ -1,0 +1,55 @@
+<div class="todo">
+  <h2>📝 To-Do</h2>
+
+  <form (submit)="$event.preventDefault(); add()">
+    <input
+      placeholder="What needs to be done?"
+      [ngModel]="newTitle()"
+      (ngModelChange)="newTitle.set($event)"
+      name="newTitle"
+      autofocus
+    />
+    <button type="submit">Add</button>
+  </form>
+
+  <div class="controls" *ngIf="any()">
+    <label class="toggle-all">
+      <input
+        type="checkbox"
+        [checked]="allDone()"
+        (change)="toggleAll($any($event.target).checked)"
+      />
+      Mark all as done
+    </label>
+
+    <div class="filters">
+      <button [class.active]="filter() === 'all'" (click)="setFilter('all')">All</button>
+      <button [class.active]="filter() === 'active'" (click)="setFilter('active')">Active</button>
+      <button [class.active]="filter() === 'completed'" (click)="setFilter('completed')">Completed</button>
+    </div>
+  </div>
+
+  <ul class="list">
+    <li *ngFor="let t of visible()">
+      <label>
+        <input type="checkbox" [checked]="t.done" (change)="toggle(t.id)" />
+      </label>
+
+      <span
+        class="title"
+        [class.done]="t.done"
+        contenteditable="true"
+        (keydown.enter)="$event.preventDefault(); $any($event.target).blur()"
+        (blur)="editTitle(t, ($any($event.target)?.innerText || ''))"
+        [innerText]="t.title">
+      </span>
+
+      <button class="del" (click)="remove(t.id)">✕</button>
+    </li>
+  </ul>
+
+  <div class="footer" *ngIf="any()">
+    <span>{{ remaining() }} items left</span>
+    <button class="clear" (click)="clearCompleted()">Clear completed</button>
+  </div>
+</div>
