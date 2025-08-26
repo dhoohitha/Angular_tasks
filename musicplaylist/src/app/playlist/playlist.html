@@ -1,0 +1,73 @@
+<div class="playlist">
+  <h2>🎵 Music Playlist</h2>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="filter">
+      <label>Artist</label>
+      <select
+        [ngModel]="artistFilter()"
+        (ngModelChange)="artistFilter.set($event)"
+      >
+        <option value="">All</option>
+        <option *ngFor="let a of artists()" [value]="a">{{ a }}</option>
+      </select>
+    </div>
+
+    <div class="filter">
+      <label>Album</label>
+      <select
+        [ngModel]="albumFilter()"
+        (ngModelChange)="albumFilter.set($event)"
+      >
+        <option value="">All</option>
+        <option *ngFor="let a of albums()" [value]="a">{{ a }}</option>
+      </select>
+    </div>
+
+    <div class="filter search">
+      <label>Search</label>
+      <input
+        type="text"
+        placeholder="Song name…"
+        [ngModel]="searchText()"
+        (ngModelChange)="searchText.set($event)"
+      />
+    </div>
+
+    <button class="clear" type="button" (click)="clearFilters()">Clear</button>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+    <div class="card" *ngFor="let s of filtered()" [class.top]="isTopRated(s)">
+      <div class="row">
+        <div class="title">
+          <span class="name">{{ s.songName }}</span>
+          <span class="badge" *ngIf="isTopRated(s)">Top Rated ⭐</span>
+        </div>
+        <button class="play" type="button" (click)="play(s)" title="Play">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M8 5v14l11-7-11-7z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="meta">
+        <div><strong>Artist:</strong> {{ s.artist }}</div>
+        <div><strong>Album:</strong> {{ s.album }}</div>
+      </div>
+
+      <div class="footer">
+        <span><strong>Duration:</strong> {{ s.duration }}</span>
+        <span class="rating" [attr.aria-label]="'Rating ' + s.rating">
+          ★ {{ s.rating.toFixed(1) }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filtered().length === 0" class="empty">
+    No songs match your filters.
+  </div>
+</div>
