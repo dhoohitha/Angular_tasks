@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Questions Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #3498db; color: white; }
+        form { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        label { font-weight: bold; }
+        input, select { padding: 8px; width: 100%; border: 1px solid #ccc; border-radius: 4px; }
+        button {
+            grid-column: span 2;
+            padding: 10px; background: #27ae60;
+            color: white; border: none; border-radius: 5px;
+        }
+        button:hover { background: #1e8449; }
+        a.delete { color: red; text-decoration: none; }
+        a.delete:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Quiz Questions Dashboard</h1>
+
+    <!-- Question List -->
+    <h2>All Questions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Category</th>
+                <th>Difficulty</th>
+                <th>Correct Answer</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="q : ${questions}">
+                <td th:text="${q.id}"></td>
+                <td th:text="${q.questionTitle}"></td>
+                <td th:text="${q.category}"></td>
+                <td th:text="${q.difficultyLevel}"></td>
+                <td th:text="${q.correctAnswer}"></td>
+                <td>
+                    <a th:href="@{'/questions/delete/' + ${q.id}}" class="delete">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add Question Form -->
+    <h2>Add New Question</h2>
+    <form th:action="@{/questions}" th:object="${question}" method="post">
+        <div>
+            <label>Question Title</label>
+            <input type="text" th:field="*{questionTitle}" required />
+        </div>
+        <div>
+            <label>Correct Answer</label>
+            <input type="text" th:field="*{correctAnswer}" required />
+        </div>
+        <div>
+            <label>Option 1</label>
+            <input type="text" th:field="*{option1}" required />
+        </div>
+        <div>
+            <label>Option 2</label>
+            <input type="text" th:field="*{option2}" required />
+        </div>
+        <div>
+            <label>Option 3</label>
+            <input type="text" th:field="*{option3}" required />
+        </div>
+        <div>
+            <label>Option 4</label>
+            <input type="text" th:field="*{option4}" required />
+        </div>
+        <div>
+            <label>Difficulty</label>
+            <select th:field="*{difficultyLevel}">
+                <option value="EASY">EASY</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HARD">HARD</option>
+            </select>
+        </div>
+        <div>
+            <label>Category</label>
+            <select th:field="*{category}">
+                <option value="JAVA">JAVA</option>
+                <option value="SPRING">SPRING</option>
+                <option value="GIT">GIT</option>
+                <option value="SPRING_BOOT">SPRING_BOOT</option>
+            </select>
+        </div>
+        <button type="submit">Save Question</button>
+    </form>
+</body>
+</html>
