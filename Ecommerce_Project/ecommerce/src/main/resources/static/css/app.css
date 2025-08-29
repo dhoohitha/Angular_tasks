@@ -1,0 +1,4 @@
+body { background-color: #f7f8fb; }
+.card-img-top { object-fit: cover; height: 180px; }
+.navbar .badge { font-size: 0.7rem; }
+.table thead th { white-space: nowrap; }

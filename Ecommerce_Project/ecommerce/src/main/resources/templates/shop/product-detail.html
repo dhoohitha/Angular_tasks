@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Product</title></head>
+<body>
+<a href="javascript:history.back()">← Back</a>
+<h2 th:text="${p.name}"></h2>
+<img th:if="${p.imageUrl}" th:src="${p.imageUrl}" alt="" style="max-width:240px;">
+<p th:text="${p.description}"></p>
+<div>Price: ₹ <span th:text="${p.price}"></span></div>
+<div>Stock: <span th:text="${p.stock}"></span></div>
+
+<!-- Cart will be wired next -->
+<form th:action="@{'/shop/cart/add/' + ${p.id}}" method="post">
+  <input type="number" name="quantity" value="1" min="1">
+  <button type="submit">Add to Cart</button>
+</form>
+<form th:action="@{'/shop/cart/add/' + ${p.id}}" method="post">
+  <input type="number" name="quantity" value="1" min="1">
+  <button type="submit">Add to Cart</button>
+</form>
+
+</body>
+
+</html>

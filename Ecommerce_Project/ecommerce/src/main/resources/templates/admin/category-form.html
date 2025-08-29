@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Category</title></head>
+<body>
+<h2 th:text="${category.id == null ? 'Create Category' : 'Edit Category'}"></h2>
+<a href="/admin/categories">← Back</a>
+
+<form th:action="@{${category.id == null} ? '/admin/categories/create' : '/admin/categories/' + ${category.id} + '/edit'}"
+      method="post" th:object="${category}">
+  <div>
+    <label>Name</label>
+    <input th:field="*{name}" required>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+  </div>
+  <div>
+    <label>Description</label>
+    <input th:field="*{description}">
+  </div>
+  <div>
+    <label>Parent</label>
+    <select th:field="*{parent}">
+      <option th:value="${null}">— none —</option>
+      <option th:each="p : ${allCategories}"
+              th:value="${p}" th:text="${p.name}"
+              th:selected="${category.parent != null and p.id == category.parent.id}">
+      </option>
+    </select>
+  </div>
+  <button type="submit">Save</button>
+</form>
+
+</body>
+
+</html>

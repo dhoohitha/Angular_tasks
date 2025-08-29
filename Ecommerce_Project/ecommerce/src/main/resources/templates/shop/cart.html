@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>My Cart</title></head>
+<body>
+<a href="/shop/home">← Continue Shopping</a>
+<h2>My Cart</h2>
+
+<div th:if="${cart.items.size() == 0}">
+  <p>Your cart is empty.</p>
+</div>
+
+<table th:if="${cart.items.size() > 0}" border="1" cellpadding="6">
+  <tr>
+    <th>Product</th><th>Price</th><th>Qty</th><th>Line Total</th><th>Actions</th>
+  </tr>
+  <tr th:each="item : ${cart.items}">
+    <td>
+      <a th:href="@{'/shop/product/' + ${item.product.id}}"
+         th:text="${item.product.name}">Product</a>
+    </td>
+    <td th:text="${item.unitPrice}">0.00</td>
+    <td>
+      <form th:action="@{'/shop/cart/update/' + ${item.id}}" method="post" style="display:inline;">
+        <input type="number" name="quantity" th:value="${item.quantity}" min="1" style="width:70px;">
+        <button type="submit">Update</button>
+      </form>
+    </td>
+    <td th:text="${item.lineTotal}">0.00</td>
+    <td>
+      <form th:action="@{'/shop/cart/remove/' + ${item.id}}" method="post" style="display:inline;">
+        <button type="submit" onclick="return confirm('Remove item?')">Remove</button>
+      </form>
+    </td>
+  </tr>
+  
+</table>
+
+<div th:if="${cart.items.size() > 0}" style="margin-top:12px;">
+  <p>Subtotal: <b th:text="${summary.subtotal}">0.00</b></p>
+  <p>Total: <b th:text="${summary.total}">0.00</b></p>
+  <form th:action="@{'/shop/cart/clear'}" method="post">
+    <button type="submit" onclick="return confirm('Clear entire cart?')">Clear Cart</button>
+  </form>
+  <form th:action="@{'/shop/checkout'}" method="get" style="margin-top:8px;">
+    <button type="submit">Proceed to Checkout</button>
+  </form>
+
+</div>
+
+</body>
+
+</html>
