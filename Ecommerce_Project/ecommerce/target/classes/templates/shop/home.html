@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Shop Home</title></head>
+<body>
+<h2>Shop</h2>
+<nav>
+  <a href="/logout">Logout</a>
+</nav>
+
+<h3>Categories</h3>
+<ul>
+  <li th:each="c : ${categories}">
+    <a th:href="@{'/shop/category/' + ${c.id}}" th:text="${c.name}"></a>
+  </li>
+</ul>
+<nav>
+  <a href="/shop/cart">Cart</a>
+  <a href="/logout">Logout</a>
+</nav>
+
+</body>
+
+</html>

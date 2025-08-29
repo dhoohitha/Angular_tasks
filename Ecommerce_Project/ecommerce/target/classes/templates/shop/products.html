@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Products</title></head>
+<body>
+<a href="/shop/home">← Back</a>
+
+<h2 th:text="${category != null ? category.name : ('Search: ' + q)}">Products</h2>
+
+<div th:if="${products.content.size() == 0}">No products.</div>
+
+<div th:each="p : ${products.content}" style="border:1px solid #ccc; padding:8px; margin:8px;">
+  <h4><a th:href="@{'/shop/product/' + ${p.id}}" th:text="${p.name}">Product</a></h4>
+  <p th:text="${p.description}">Description</p>
+  <div>
+    ₹ <span th:text="${p.price}">0.00</span>
+    | Stock: <span th:text="${p.stock}">0</span>
+  </div>
+</div>
+
+<div th:if="${products.totalPages > 1}">
+  <a th:if="${products.hasPrevious()}"
+     th:href="@{${#httpServletRequest.requestURI}(page=${products.number - 1}, size=${products.size}, q=${q})}">Prev</a>
+
+  <span th:text="'Page ' + (${products.number + 1}) + ' / ' + ${products.totalPages}">Page</span>
+
+  <a th:if="${products.hasNext()}"
+     th:href="@{${#httpServletRequest.requestURI}(page=${products.number + 1}, size=${products.size}, q=${q})}">Next</a>
+</div>
+
+</body>
+
+</html>

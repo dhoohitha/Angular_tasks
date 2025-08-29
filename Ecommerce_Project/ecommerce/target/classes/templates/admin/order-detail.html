@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Order Detail</title></head>
+<body>
+<a href="/admin/orders">← Orders</a>
+
+<h2>Order #<span th:text="${order.id}">0</span></h2>
+
+<p>User: <b th:text="${order.user.username}">user</b></p>
+<p>Placed: <span th:text="${#temporals.format(order.createdAt, 'dd-MMM-yyyy HH:mm')}">date</span></p>
+<p>Status: <b th:text="${order.status}">NEW</b></p>
+<p>Ship to:</p>
+<pre th:text="${order.shippingAddress}">Address</pre>
+
+<table border="1" cellpadding="6">
+  <tr><th>Product</th><th>Unit</th><th>Qty</th><th>Total</th></tr>
+  <tr th:each="it : ${order.items}">
+    <td th:text="${it.productName}">Name</td>
+    <td th:text="${it.unitPrice}">0.00</td>
+    <td th:text="${it.quantity}">1</td>
+    <td th:text="${it.lineTotal}">0.00</td>
+  </tr>
+  <tr th:if="${order.items.size() == 0}">
+    <td colspan="4">No items.</td>
+  </tr>
+</table>
+
+<p>Subtotal: <b th:text="${order.subtotal}">0.00</b></p>
+<p>Total: <b th:text="${order.total}">0.00</b></p>
+
+<h3>Update Status</h3>
+<form th:action="@{'/admin/orders/' + ${order.id} + '/status'}" method="post">
+  <select name="to">
+    <option th:if="${order.status.name() == 'NEW'}" value="PAID">PAID</option>
+    <option th:if="${order.status.name() == 'NEW'}" value="CANCELED">CANCELED</option>
+    <option th:if="${order.status.name() == 'PAID'}" value="SHIPPED">SHIPPED</option>
+  </select>
+  <button type="submit">Change</button>
+</form>
+
+</body>
+
+</html>

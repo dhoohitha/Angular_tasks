@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Something went wrong</title></head>
+<body>
+<h2>Oops! Something went wrong.</h2>
+<p th:if="${message}" th:text="${message}">An unexpected error occurred.</p>
+<p><a href="/shop/home">Go to Home</a> | <a href="javascript:history.back()">Go Back</a></p>
+</body>
+</html>
